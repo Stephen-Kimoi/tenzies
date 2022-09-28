@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Die from './Die';
 import { nanoid } from 'nanoid';
 import './App.css'
 
 function App() {
+
+  const [tenzies, setTenzies] = useState(false)
 
   const holdDice = (id) => {
     setDice( prevDice => prevDice.map( dice => {
@@ -46,6 +48,17 @@ function App() {
             }
     }))
   }
+
+  useEffect( () => {
+    const allHeld = dice.every( dice => dice.isHeld)
+    const firstValue = dice[0].value 
+    const allSame = dice.every( dice => dice.value === firstValue)
+
+    if  (allHeld && allSame){
+      setTenzies(true); 
+      console.log("You won!"); 
+    }
+  }, [dice])
 
 
   return (
