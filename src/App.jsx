@@ -64,7 +64,6 @@ function App() {
 
     if  (allHeld && allSame){
       setTenzies(true); 
-      console.log("You won!"); 
     }
   }, [dice])
 
@@ -82,12 +81,17 @@ function App() {
         }
 
         <h1 className="title">Tenzies</h1>
-            <p className="instructions">
-               Roll until all dice are the same. <br/>Click each die to freeze it at 
-               its current value between rolls.
-            </p>
-
-            
+          <p className="instructions">
+              Roll until all dice are the same. <br/>Click each die to freeze it at 
+              its current value between rolls.
+          </p>
+          
+          {
+            tenzies && 
+                <div className="won-div">
+                  You won!
+                </div> 
+          }
 
           <div className='die-container'> 
              { dieDivs}

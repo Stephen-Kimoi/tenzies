@@ -79,3 +79,14 @@
     text-align: center;
     margin-bottom: 20px;
 }
+
+.won-div {
+    background-color: rgb(90, 235, 90, 0.9);
+    width: 120px; 
+    height: 40px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    margin: 20px;
+    border-radius: 5px;
+}
