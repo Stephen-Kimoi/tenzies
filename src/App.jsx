@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import Die from './Die';
 import { nanoid } from 'nanoid';
-import './App.css'
+import './App.css'; 
+import { useWindowSize } from 'usehooks-ts';
+import Confetti from 'react-confetti';
 
 function App() {
 
   const [tenzies, setTenzies] = useState(false)
+
+  const { width, height } = useWindowSize(); 
 
   const holdDice = (id) => {
     setDice( prevDice => prevDice.map( dice => {
@@ -49,6 +53,10 @@ function App() {
     }))
   }
 
+  function refreshGame() {
+    window.location.reload(); 
+  }
+
   useEffect( () => {
     const allHeld = dice.every( dice => dice.isHeld)
     const firstValue = dice[0].value 
@@ -65,19 +73,36 @@ function App() {
     <div className="app">
         <div className='app-container'>
 
+        { 
+          tenzies && 
+             <Confetti 
+               width={width} 
+               height={height}
+             />
+        }
+
         <h1 className="title">Tenzies</h1>
             <p className="instructions">
                Roll until all dice are the same. <br/>Click each die to freeze it at 
                its current value between rolls.
             </p>
 
+            
+
           <div className='die-container'> 
              { dieDivs}
           </div>
-          
-          <div className='reset-button' onClick={resetButton}>
-             Roll Dice
-          </div>
+
+          {
+            tenzies ? 
+              <div className='refresh-button' onClick={refreshGame}>
+                  New game
+              </div> : 
+
+              <div className='reset-button' onClick={resetButton}>
+                   Roll Dice
+               </div>
+          }
 
         </div>
     </div>
