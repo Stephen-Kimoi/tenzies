@@ -4,10 +4,18 @@ import { nanoid } from 'nanoid';
 import './App.css'; 
 import { useWindowSize } from 'usehooks-ts';
 import Confetti from 'react-confetti';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
 
   const [tenzies, setTenzies] = useState(false)
+  const [rolls, setRolls] = useState(0); 
+  const [time, setTime] = useState({
+    minutes: 0, 
+    seconds: 0
+  }); 
+  
+  let navigate = useNavigate(); 
 
   const { width, height } = useWindowSize(); 
 
@@ -51,11 +59,30 @@ function App() {
               id: nanoid()
             }
     }))
+    setRolls(rolls + 1); 
+    console.log(rolls)
   }
 
   function refreshGame() {
     window.location.reload(); 
   }
+
+  function timer() {
+    let minutes = 0; 
+    let seconds = 0; 
+
+    setInterval(() => {
+       seconds + 1 
+    }, 1000); 
+
+    if (seconds >= 60){
+      seconds = 0; 
+      minutes = 1; 
+    }  
+
+    console.log(minutes, seconds); 
+  }
+  
 
   useEffect( () => {
     const allHeld = dice.every( dice => dice.isHeld)
@@ -66,6 +93,10 @@ function App() {
       setTenzies(true); 
     }
   }, [dice])
+
+  useEffect( () => {
+    setInterval(timer(), 1000); 
+  }, [time])
 
 
   return (
@@ -107,6 +138,34 @@ function App() {
                    Roll Dice
                </div>
           }
+
+            <div className="other-info">
+
+                <div className='time'>
+                    {/* { 
+                      setInterval(timer(), 1000)
+                    } */}
+                    Time: { time.minutes }:{ time.seconds }
+                </div> 
+
+                <div className='rolls'>
+                   Rolls: { rolls }
+                </div>
+            </div>
+
+            <div className='other-info2'>
+                <div className='instructions2' onClick={() => navigate("/instructions")}>
+                    Check Instructions
+                </div>
+
+                <div className='scoreboard' onClick={() => navigate("/scoreboard")}>
+                    Check scoreboard
+                </div>
+
+                <div className='reset-game'> 
+                    Reset Game
+                </div>
+            </div>
 
         </div>
     </div>
