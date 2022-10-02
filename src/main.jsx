@@ -4,16 +4,16 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import Instructions from './Instructions';
-import ScoreBoard from './ScoreBoard';
+import Start from './Start';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path={"/"} element={<App />} /> 
+      <Routes> 
+        <Route path={"/"} element={<Start />} /> 
+        <Route path={"/game"} element={<App />} /> 
         <Route path={"/instructions"} element={<Instructions />} />  
-        <Route path={"/scoreboard"} element={<ScoreBoard />} /> 
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
