@@ -26,18 +26,27 @@
     justify-content: center;
 }
 
+@media all and (max-width: 480px) { 
+    .app-container {
+        height: fit-content;
+    }
+}
+
 .die-container {
     display: grid;
-    grid-template: auto auto / repeat(5, 1fr);
-    /* grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 1fr); */ 
+    /* grid-template-columns: repeat(auto-fit, minmax(700px, 9fr)); 
+    grid-gap: 0.3rem; 
+    width: 80%; */
+    /* grid-template: auto auto / repeat(5, 1fr); */
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 50px;
-    grid-row-gap: 50px;      
+    grid-row-gap: 50px;     
 }
 
 .die-numbers {
     box-shadow: 4px 8px 14px -1px rgba(0,0,0,0.75);
-    width: 70px; 
+    width: 4rem; 
     height: 70px; 
     display: flex;
     align-items: center;
@@ -48,8 +57,28 @@
     cursor: pointer;
 }
 
+@media all and (min-width: 480px) and (max-width: 768px) { 
+    .die-numbers {
+        width: 3rem;
+        height: 50px;
+    }
+}
+
+@media all and (max-width: 480px) {  
+    .die-numbers {
+        width: 2.5rem; 
+        height: 40px;
+    }
+    .die-container {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 20px;
+        grid-row-gap: 20px; 
+    }
+}
+
 .reset-button, .refresh-button {
-    /* background-color: rgba(66, 66, 66, 0.9);  */
+    background-color: rgba(66, 66, 66, 0.9); 
     width: 100px; 
     height: 50px; 
     display: flex; 
@@ -58,7 +87,7 @@
     border-radius: 5px;
     margin-top: 50px;
     color: white;
-    /* cursor: not-allowed; */
+    cursor: pointer;
 }
 
 .reset-button:hover, .refresh-button:hover {
@@ -110,8 +139,9 @@
 }
 .instructions2, .reset-game, .scoreboard {
     background-color: rgba(94, 86, 86, 0.9); 
-    width: 150px; 
-    height: 30px; 
+    border: none;
+    width: 160px; 
+    height: 40px; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
@@ -120,6 +150,7 @@
     color: white;
     font-size: 0.9rem;
     cursor: pointer;
+    text-align: center;
 }
 .instructions2:hover , .reset-game:hover , .scoreboard:hover {
     background-color: rgba(117, 110, 110, 0.9);
@@ -174,4 +205,16 @@
 }
 .back-button:hover {
     background-color: rgba(94, 91, 91, 0.9);
+}
+
+/* START PAGE */
+.start-buttons {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center;
+}
+.start-buttons .refresh-button {
+    margin-top: 0; 
+    margin: 1rem;
 }
