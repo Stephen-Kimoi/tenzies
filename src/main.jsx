@@ -2,9 +2,8 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import './index.css'
-import Instructions from './Instructions';
-import Start from './Start';
+import Instructions from './components/Instructions';
+import Start from './components/Start';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

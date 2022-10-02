@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Die from './Die';
+import Die from './components/Die';
 import { nanoid } from 'nanoid';
 import './App.css'; 
 import { useWindowSize } from 'usehooks-ts';
@@ -13,10 +13,9 @@ function App() {
   const [tenzies, setTenzies] = useState(false)
   const [pauseGame, setPauseGame] = useState(false)
   const [rolls, setRolls] = useState(0);  
-  const { minutes, seconds, start, pause} = useStopwatch({ autoStart: true })
+  const { minutes, seconds, start, pause, reset} = useStopwatch({ autoStart: true })
 
   const styles = {
-    backgroundColor: pauseGame ? "grey" : "black", 
     cursor: pauseGame ? "not-allowed" : "pointer", 
   }
   
@@ -69,7 +68,11 @@ function App() {
   }
 
   function refreshGame() {
-    window.location.reload(); 
+    // window.location.reload(); 
+    setTenzies(false); 
+    setRolls(0); 
+    reset(); 
+    setDice(newNumbers())
   }
 
 
@@ -141,26 +144,28 @@ function App() {
                 </div>
             </div>
 
-            <div className='other-info2'>
-                <div className='instructions2' onClick={() => navigate("/instructions")}>
-                    Check Instructions
-                </div>
+            {
+              !tenzies && 
+              <div className='other-info2'>
+                  <div className='instructions2' onClick={() => navigate("/instructions")}>
+                      Check Instructions
+                  </div>
 
-                <div className='reset-game' onClick={refreshGame}> 
-                    Reset Game
-                </div>
-                
-                {
-                  pauseGame ? 
-                  <button className='reset-game' onClick={ () => { start(); gamePaused(); }}>
-                    Resume Game
-                  </button> : 
-                  <button className='reset-game' onClick={ () => { pause(); gamePaused(); }}>
-                    Pause Game
-                  </button>
-                }
-
-            </div>
+                  <div className='reset-game' onClick={refreshGame}> 
+                      Reset Game
+                  </div>
+                  
+                  {
+                    pauseGame ? 
+                    <button className='reset-game' onClick={ () => { start(); gamePaused(); }}>
+                      Resume Game
+                    </button> : 
+                    <button className='reset-game' onClick={ () => { pause(); gamePaused(); }}>
+                      Pause Game
+                    </button>
+                  }
+              </div>
+            }
 
         </div>
     </div>
