@@ -80,7 +80,7 @@ function App() {
 
     if  (allHeld && allSame){
       setTenzies(true); 
-      stop; 
+      pause(); 
     }
   }, [dice])
 
@@ -146,10 +146,6 @@ function App() {
                     Check Instructions
                 </div>
 
-                <div className='scoreboard' onClick={() => navigate("/scoreboard")}>
-                    Check scoreboard
-                </div>
-
                 <div className='reset-game' onClick={refreshGame}> 
                     Reset Game
                 </div>
@@ -169,10 +165,6 @@ function App() {
         </div>
     </div>
   )
-}
-
-export function Scoreboard() {
-   
 }
 
 export default App; 
