@@ -5,15 +5,20 @@ import './App.css';
 import { useWindowSize } from 'usehooks-ts';
 import Confetti from 'react-confetti';
 import { useNavigate } from 'react-router-dom';
+import { useStopwatch } from 'react-timer-hook'; 
 
-function App() {
+
+function App() { 
 
   const [tenzies, setTenzies] = useState(false)
-  const [rolls, setRolls] = useState(0); 
-  const [time, setTime] = useState({
-    minutes: 0, 
-    seconds: 0
-  }); 
+  const [pauseGame, setPauseGame] = useState(false)
+  const [rolls, setRolls] = useState(0);  
+  const { minutes, seconds, start, pause} = useStopwatch({ autoStart: true })
+
+  const styles = {
+    backgroundColor: pauseGame ? "grey" : "black", 
+    cursor: pauseGame ? "not-allowed" : "pointer", 
+  }
   
   let navigate = useNavigate(); 
 
@@ -67,22 +72,6 @@ function App() {
     window.location.reload(); 
   }
 
-  function timer() {
-    let minutes = 0; 
-    let seconds = 0; 
-
-    setInterval(() => {
-       seconds + 1 
-    }, 1000); 
-
-    if (seconds >= 60){
-      seconds = 0; 
-      minutes = 1; 
-    }  
-
-    console.log(minutes, seconds); 
-  }
-  
 
   useEffect( () => {
     const allHeld = dice.every( dice => dice.isHeld)
@@ -91,12 +80,13 @@ function App() {
 
     if  (allHeld && allSame){
       setTenzies(true); 
+      stop; 
     }
   }, [dice])
 
-  useEffect( () => {
-    setInterval(timer(), 1000); 
-  }, [time])
+  function gamePaused() {
+    setPauseGame(!pauseGame)
+  }
 
 
   return (
@@ -128,24 +118,22 @@ function App() {
              { dieDivs}
           </div>
 
-          {
+          { 
+
             tenzies ? 
               <div className='refresh-button' onClick={refreshGame}>
                   New game
               </div> : 
 
-              <div className='reset-button' onClick={resetButton}>
+              <button className='reset-button' onClick={resetButton} disabled={pauseGame} style={{ styles }}>
                    Roll Dice
-               </div>
+               </button>
           }
 
             <div className="other-info">
 
                 <div className='time'>
-                    {/* { 
-                      setInterval(timer(), 1000)
-                    } */}
-                    Time: { time.minutes }:{ time.seconds }
+                    Time: { minutes }:{ seconds }
                 </div> 
 
                 <div className='rolls'>
@@ -162,9 +150,20 @@ function App() {
                     Check scoreboard
                 </div>
 
-                <div className='reset-game'> 
+                <div className='reset-game' onClick={refreshGame}> 
                     Reset Game
                 </div>
+                
+                {
+                  pauseGame ? 
+                  <button className='reset-game' onClick={ () => { start(); gamePaused(); }}>
+                    Resume Game
+                  </button> : 
+                  <button className='reset-game' onClick={ () => { pause(); gamePaused(); }}>
+                    Pause Game
+                  </button>
+                }
+
             </div>
 
         </div>
@@ -172,4 +171,8 @@ function App() {
   )
 }
 
-export default App
+export function Scoreboard() {
+   
+}
+
+export default App; 
